@@ -14,6 +14,7 @@ func main() {
 	if err != nil {
 		panic("Connection could not be established")
 	}
+	println(mongoClient)
 
 	engine := gin.New()
 	engine.Use(gin.Recovery())
