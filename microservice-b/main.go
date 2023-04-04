@@ -3,18 +3,31 @@ package main
 import (
 	"os"
 
-	"github.com/DuwanSierra/grpc-rest-go/microservice-b/infrastructure/databases/mongo"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
-func main() {
-	conn := os.Getenv("MONGO_ADDRESS")
+func goDotEnvVariable(key string) string {
+	err := godotenv.Load(".env")
 
-	mongoClient, err := mongo.NewClient(conn)
 	if err != nil {
-		panic("Connection could not be established")
+		panic("Error loading .env file")
 	}
-	println(mongoClient)
+
+	return os.Getenv(key)
+}
+
+/**
+ * this function is used to configure routes
+ */
+func configureRoutes(engine *gin.Engine) {
+	router := gin.Default()
+	router.GET("/companies", GetCompanies)
+}
+
+func main() {
+	conn := goDotEnvVariable("MONGO_ADDRESS")
+	println(conn)
 
 	engine := gin.New()
 	engine.Use(gin.Recovery())

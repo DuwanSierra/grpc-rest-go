@@ -1,13 +1,15 @@
-version: "3.8"
+version: '3.7'
 services:
-mongodb:
-image : mongo
-container_name: mongodb
-environment:
-- PUID=1000
-- PGID=1000
+  mongodb_container:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+      MONGO_INITDB_DATABASE: test
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+
 volumes:
-- /data:/data/db
-ports:
-- 27017:27017
-restart: unless-stopped
+  mongodb_data_container:
