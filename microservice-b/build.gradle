@@ -21,6 +21,7 @@ dependencies {
 	testImplementation 'io.projectreactor:reactor-test'
 	compileOnly 'org.projectlombok:lombok'  
   	annotationProcessor 'org.projectlombok:lombok'
+	implementation project(':grpc-interface')
 }
 
 tasks.named('test') {

@@ -1,0 +1,5 @@
+rootProject.name = 'grpc-rest-spring-boot'
+
+include 'grpc-interface'
+include 'microservicea'
+include 'microserviceb'

@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.grpc.microservicea.dto.PerformanceResponse;
 import com.grpc.microservicea.infrastructure.services.IBotanicSpeciesRemote;
@@ -22,12 +23,11 @@ public class BotanicalSpecies {
         this.botanicSpeciesRemote = botanicSpeciesRemote;
     }
     @GetMapping
-    public Mono<PerformanceResponse> getAllEmployees() {
+    public Mono<PerformanceResponse> getAllSpecies(@RequestParam(required = true) int size) {
         long start = System.nanoTime();    
-        //This line when completed call at service return a Flux<BotanicSpecieRequest>
-        return botanicSpeciesRemote.getAllBotanicSpecies(1000).flatMap(res -> {
+        return botanicSpeciesRemote.getAllBotanicSpecies(size).flatMap(res -> {
             long elapsedTime = System.nanoTime() - start;
-            float seconds = TimeUnit.SECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
+            float seconds = TimeUnit.MILLISECONDS.convert(elapsedTime, TimeUnit.NANOSECONDS);
             return Mono.just(new PerformanceResponse(seconds));
         });
     }

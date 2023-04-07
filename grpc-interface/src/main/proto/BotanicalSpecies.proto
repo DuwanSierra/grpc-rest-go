@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package net.devh.boot.grpc.example;
+
+option java_multiple_files = true;
+option java_package = "com.grpc.grpcinterface.grpc";
+option java_outer_classname = "BotanicalSpeciesProto";
+
+// The greeting service definition.
+service BotanicalSpeciesGrpcService {
+    // Sends a greeting
+    rpc GetAllBotanicalSpecies (BotanicalSpeciesRequest) returns (BotanicalSpeciesResponse) {
+    }
+}
+
+// The request message containing the user's name.
+message BotanicalSpeciesRequest {
+    int64 size = 1;
+}
+
+// The response message containing the greetings
+message BotanicalSpeciesResponse {
+    repeated BotanicalSpeciesDto species = 1;
+}
+
+message BotanicalSpeciesDto{
+    string grupo = 1;
+    string familia = 2;
+    string nombreCientifico = 3;
+    string endemismoParaColombia = 4;
+    string estadoDeAmenaza = 5;
+    string nativaDeColombia = 6;
+    string especimenRepresentativo = 7;
+}
