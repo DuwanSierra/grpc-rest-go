@@ -1,0 +1,5 @@
+rootProject.name = 'grpc-test'
+
+include ('grpcinterface')
+include ('microservicea')
+include ('microserviceb')
