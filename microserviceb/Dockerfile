@@ -1,7 +1,7 @@
 FROM openjdk:17-jdk-slim-buster AS builder
 WORKDIR /app
 
-COPY ./microservicea/build/libs/ ./build/libs/
+COPY ./microserviceb/build/libs/ ./build/libs/
 # lightweight image
 FROM openjdk:17-jdk-slim-buster
 
