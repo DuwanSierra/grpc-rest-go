@@ -2,9 +2,10 @@ name: gRPC Demo
 run-name: ${{ github.actor }} deploy gRPC demo in Azure Cloud 🚀
 # this workflow is triggered on push or pull request events but only for the main branch
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    push:
+      branches:
+        - main
 jobs:
   build-all-projects:
     runs-on: ubuntu-latest
@@ -17,7 +18,7 @@ jobs:
           java-version: '17'
       # install dependencies and build with gradle
       - name: Install dependencies
-        run: ./gradlew build
+      - run: ./gradlew build
 
   build-docker-images:
     runs-on: ubuntu-latest
@@ -30,9 +31,9 @@ jobs:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '17'
       - name: Build Docker image Microservice A
-        run: docker build -t microservicea:latest -f ./microservicea/Dockerfile
+      - run: docker build -t microservicea:latest -f ./microservicea/Dockerfile
       - name: Build Docker image Microservice B
-        run: docker build -t microserviceb:latest -f ./microserviceb/Dockerfile
+      - run: docker build -t microserviceb:latest -f ./microserviceb/Dockerfile
 
       # login to the Docker Hub registry
       - name: Login to Docker Hub
