@@ -16,3 +16,7 @@ jobs:
         with:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '17'
+      # install dependencies and build with gradle
+      - name: Install dependencies
+        run: ./gradlew build
+
