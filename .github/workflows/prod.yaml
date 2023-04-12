@@ -40,10 +40,10 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Build Docker image Microservice A
-        run: docker build -t microservicea:latest -f ./microservicea/Dockerfile
+        run: docker build -t microservicea:latest . -f ./microservicea/Dockerfile
 
       - name: Build Docker image Microservice B
-        run: docker build -t microserviceb:latest -f ./microserviceb/Dockerfile
+        run: docker build -t microserviceb:latest . -f ./microserviceb/Dockerfile
 
       # login to the Docker Hub registry
       - name: Login to Docker Hub
