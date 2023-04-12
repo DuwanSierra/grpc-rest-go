@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin' # See 'Supported distributions' for available options
@@ -25,15 +25,18 @@ jobs:
     needs: build-all-projects
     steps:
       - name: Check out repository code
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin' # See 'Supported distributions' for available options
           java-version: '17'
+      # add docker GitHub action
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
       - name: Build Docker image Microservice A
-      - run: docker build -t microservicea:latest -f ./microservicea/Dockerfile
+        run: docker build -t microservicea:latest -f ./microservicea/Dockerfile
       - name: Build Docker image Microservice B
-      - run: docker build -t microserviceb:latest -f ./microserviceb/Dockerfile
+        run: docker build -t microserviceb:latest -f ./microserviceb/Dockerfile
 
       # login to the Docker Hub registry
       - name: Login to Docker Hub
