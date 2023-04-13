@@ -85,6 +85,7 @@ jobs:
           username: ${{ secrets.USERNAME_VM1 }}
           password: ${{ secrets.PASSWORD_VM1 }}
           port: 22
+          rmRemote: true
 
       # Connect to VM1 and run docker commands
       - name: Deploy Docker image in VM1
