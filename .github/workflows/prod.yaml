@@ -94,15 +94,13 @@ jobs:
           username: ${{ secrets.USERNAME_VM1 }}
           password: ${{ secrets.PASSWORD_VM1 }}
           port: 22
-          # Set environment variables from secrets
+          # Set environment variables from secrets and save in .env file
           # run command to stop all containers with the same name
           # run command to pull the latest image from Docker Hub
           # and run the container expose port 8080 and 9090
           script: |
-              export VM2_REST_IP_PORT=${{ secrets.VM2_REST_IP_PORT }}
-              export VM2_GRPC_IP_PORT=${{ secrets.VM2_GRPC_IP_PORT }}
-              set -a
-              source .env
+              echo "VM1_REST_IP_PORT=${{ secrets.VM1_REST_IP_PORT }}" >> .env
+              echo "VM1_GRPC_IP_PORT=${{ secrets.VM1_GRPC_IP_PORT }}" >> .env
               docker-compose -f docker-compose-files/docker-compose.yaml down
               docker-compose -f docker-compose-files/docker-compose.yaml pull
               docker-compose -f docker-compose-files/docker-compose.yaml up -d
