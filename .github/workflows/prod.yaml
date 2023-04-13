@@ -119,8 +119,8 @@ jobs:
           overwrite: true
           rm: true
 
-      # Connect to VM1 and run docker commands
-      - name: Deploy Docker image in VM1
+      # Connect to VM2 and run docker commands
+      - name: Deploy Docker image in VM2
         uses: appleboy/ssh-action@v0.1.4
         with:
           host: ${{ secrets.HOST_VM2 }}
