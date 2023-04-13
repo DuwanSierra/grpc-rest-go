@@ -8,13 +8,13 @@ services:
       - 27017:27017
     volumes:
       - mongodb_data_container:/data/db
-  mongoclient:
-      image: mongoclient/mongoclient:latest
-      container_name: mongoclient
-      hostname: mongoclient
-      depends_on:
-        - mongodb_container
-      ports:
-        - 3300:3000
+  microserviceb-container:
+    image: duwansierra/microserviceb:latest
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongodb_container
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb_container:27017/test_db
 volumes:
   mongodb_data_container:

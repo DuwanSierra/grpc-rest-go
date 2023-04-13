@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  microservicea-container:
+    image: duwansierra/microserviceb:latest
+    ports:
+      - 8080:8080
+      - 9090:9090
+    environment:
+      MICROSERVICEB_REST_URL: ${VM2_REST_IP_PORT}
+      MICROSERVICEB_GRPC_URL: ${VM2_GRPC_IP_PORT}
+volumes:
+  mongodb_data_container:

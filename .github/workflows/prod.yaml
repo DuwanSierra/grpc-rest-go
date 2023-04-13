@@ -2,10 +2,8 @@ name: gRPC Demo
 run-name: ${{ github.actor }} deploy gRPC demo in Azure Cloud 🚀
 # this workflow is triggered on push or pull request events but only for the main branch
 on:
-  workflow_dispatch:
-    push:
-      branches:
-        - main
+  push:
+    branches: [ main ]
 jobs:
   build-all-projects:
     runs-on: ubuntu-latest
@@ -69,3 +67,45 @@ jobs:
         run: docker push ${{ secrets.DOCKER_USERNAME }}/microservicea:latest
       - name: Push Docker image Microservice B
         run: docker push ${{ secrets.DOCKER_USERNAME }}/microserviceb:latest
+
+  deploy-microservicea:
+    runs-on: ubuntu-latest
+    needs: build-docker-images
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      # Copy docker-compose.yaml file to VM1
+      - name: Copy Docker Compose file to VM1
+        uses: garygrossgarten/github-action-scp@release
+        with:
+          local: docker-compose-files/VM1/docker-compose.yaml
+          remote: docker-compose-files
+          host: ${{ secrets.HOST_VM1 }}
+          username: ${{ secrets.USERNAME_VM1 }}
+          password: ${{ secrets.PASSWORD_VM1 }}
+          port: 22
+
+      # Connect to VM1 and run docker commands
+      - name: Deploy Docker image in VM1
+        uses: appleboy/ssh-action@v0.1.9
+        with:
+          host: ${{ secrets.HOST_VM1 }}
+          username: ${{ secrets.USERNAME_VM1 }}
+          password: ${{ secrets.PASSWORD_VM1 }}
+          port: 22
+          # Set environment variables from secrets
+          # run command to stop all containers with the same name
+          # run command to pull the latest image from Docker Hub
+          # and run the container expose port 8080 and 9090
+          script: |
+              export VM2_REST_IP_PORT=${{ secrets.VM2_REST_IP_PORT }}
+              export VM2_GRPC_IP_PORT=${{ secrets.VM2_GRPC_IP_PORT }}
+              set -a
+              source .env
+              docker-compose -f docker-compose-files/docker-compose.yaml down
+              docker-compose -f docker-compose-files/docker-compose.yaml pull
+              docker-compose -f docker-compose-files/docker-compose.yaml up -d
+          
+
+
