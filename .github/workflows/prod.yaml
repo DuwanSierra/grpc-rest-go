@@ -84,7 +84,7 @@ jobs:
           password: ${{ secrets.PASSWORD_VM1 }}
           port: 22
           source: ./docker-compose-files/VM1/docker-compose.yaml
-          target: /docker-compose-files/docker-compose.yaml
+          target: /docker-compose-files
           overwrite: true
 
       # Connect to VM1 and run docker commands
