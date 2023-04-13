@@ -101,8 +101,8 @@ jobs:
           # run command to pull the latest image from Docker Hub
           # and run the container expose port 8080 and 9090
           script: |
-              echo "VM1_REST_IP_PORT=${{ secrets.VM1_REST_IP_PORT }}" >> .env
-              echo "VM1_GRPC_IP_PORT=${{ secrets.VM1_GRPC_IP_PORT }}" >> .env
+              export VM2_REST_IP_PORT=${{ secrets.VM2_REST_IP_PORT }}
+              export VM2_GRPC_IP_PORT=${{ secrets.VM2_GRPC_IP_PORT }}
               docker-compose -f ./docker/docker-compose-files/VM1/docker-compose.yaml down
               docker-compose -f ./docker/docker-compose-files/VM1/docker-compose.yaml pull
               docker-compose -f ./docker/docker-compose-files/VM1/docker-compose.yaml up -d

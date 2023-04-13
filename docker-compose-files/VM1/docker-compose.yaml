@@ -2,6 +2,7 @@ version: '3.7'
 services:
   microservicea-container:
     image: duwansierra/microserviceb:latest
+    restart: always
     ports:
       - 8080:8080
       - 9090:9090
