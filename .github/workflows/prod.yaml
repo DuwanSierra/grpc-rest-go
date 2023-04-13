@@ -80,7 +80,7 @@ jobs:
         uses: garygrossgarten/github-action-scp@release
         with:
           local: docker-compose-files/VM1/docker-compose.yaml
-          remote: docker-compose-files
+          remote: docker-compose-files/docker-compose.yaml
           host: ${{ secrets.HOST_VM1 }}
           username: ${{ secrets.USERNAME_VM1 }}
           password: ${{ secrets.PASSWORD_VM1 }}
@@ -99,11 +99,12 @@ jobs:
           # run command to pull the latest image from Docker Hub
           # and run the container expose port 8080 and 9090
           script: |
+              ls docker-compose-files
               echo "VM1_REST_IP_PORT=${{ secrets.VM1_REST_IP_PORT }}" >> .env
               echo "VM1_GRPC_IP_PORT=${{ secrets.VM1_GRPC_IP_PORT }}" >> .env
-              docker-compose -f docker-compose-files/docker-compose.yaml down
-              docker-compose -f docker-compose-files/docker-compose.yaml pull
-              docker-compose -f docker-compose-files/docker-compose.yaml up -d
+              docker-compose -f /docker-compose-files/docker-compose.yaml down
+              docker-compose -f /docker-compose-files/docker-compose.yaml pull
+              docker-compose -f /docker-compose-files/docker-compose.yaml up -d
           
 
 
