@@ -26,6 +26,11 @@ services:
       SPRING_DATA_MONGODB_URI: mongodb://mongodb_container:27017/test_db
 volumes:
   mongodb_data_container:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /mongo-data
 networks:
   microserviceb-network:
     driver: bridge
