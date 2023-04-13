@@ -96,7 +96,6 @@ jobs:
           username: ${{ secrets.USERNAME_VM1 }}
           password: ${{ secrets.PASSWORD_VM1 }}
           port: 22
-          # Set environment variables from secrets and save in .env file
           # run command to stop all containers with the same name
           # run command to pull the latest image from Docker Hub
           # and run the container expose port 8080 and 9090
@@ -106,6 +105,35 @@ jobs:
               docker-compose -f ./docker/docker-compose-files/VM1/docker-compose.yaml down
               docker-compose -f ./docker/docker-compose-files/VM1/docker-compose.yaml pull
               docker-compose -f ./docker/docker-compose-files/VM1/docker-compose.yaml up -d
+
+      # Copy docker-compose.yaml file to VM2
+      - name: Copy Docker Compose file to VM2
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.HOST_VM2 }}
+          username: ${{ secrets.USERNAME_VM2 }}
+          password: ${{ secrets.PASSWORD_VM2 }}
+          port: 22
+          source: ./docker-compose-files/VM2/docker-compose.yaml
+          target: docker
+          overwrite: true
+          rm: true
+
+      # Connect to VM1 and run docker commands
+      - name: Deploy Docker image in VM1
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.HOST_VM2 }}
+          username: ${{ secrets.USERNAME_VM2 }}
+          password: ${{ secrets.PASSWORD_VM2 }}
+          port: 22
+          # run command to stop all containers with the same name
+          # run command to pull the latest image from Docker Hub
+          # and run the container expose port 8081 and 9091
+          script: |
+            docker-compose -f ./docker/docker-compose-files/VM2/docker-compose.yaml down
+            docker-compose -f ./docker/docker-compose-files/VM2/docker-compose.yaml pull
+            docker-compose -f ./docker/docker-compose-files/VM2/docker-compose.yaml up -d
           
 
 
