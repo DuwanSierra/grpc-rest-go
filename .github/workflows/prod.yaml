@@ -103,9 +103,9 @@ jobs:
               cd /docker-compose-files
               echo "VM1_REST_IP_PORT=${{ secrets.VM1_REST_IP_PORT }}" >> .env
               echo "VM1_GRPC_IP_PORT=${{ secrets.VM1_GRPC_IP_PORT }}" >> .env
-              docker-compose -f ./docker-compose.yaml down
-              docker-compose -f ./docker-compose.yaml pull
-              docker-compose -f ./docker-compose.yaml up -d
+              docker-compose down
+              docker-compose pull
+              docker-compose up -d
           
 
 
