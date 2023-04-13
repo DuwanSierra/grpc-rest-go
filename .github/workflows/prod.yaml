@@ -77,7 +77,7 @@ jobs:
 
       # Copy docker-compose.yaml file to VM1
       - name: Copy Docker Compose file to VM1
-        uses: appleboy/scp-action@v0.1.9
+        uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.HOST_VM1 }}
           username: ${{ secrets.USERNAME_VM1 }}
@@ -88,7 +88,7 @@ jobs:
 
       # Connect to VM1 and run docker commands
       - name: Deploy Docker image in VM1
-        uses: appleboy/ssh-action@v0.1.9
+        uses: appleboy/ssh-action@v0.1.4
         with:
           host: ${{ secrets.HOST_VM1 }}
           username: ${{ secrets.USERNAME_VM1 }}
