@@ -84,7 +84,7 @@ jobs:
           password: ${{ secrets.PASSWORD_VM1 }}
           port: 22
           source: ./docker-compose-files/VM1/docker-compose.yaml
-          target: docker-compose-files
+          target: docker
           overwrite: true
           rm: true
 
@@ -101,7 +101,7 @@ jobs:
           # run command to pull the latest image from Docker Hub
           # and run the container expose port 8080 and 9090
           script: |
-              cd /docker-compose-files
+              cd /docker/docker-compose-files/VM1
               echo "VM1_REST_IP_PORT=${{ secrets.VM1_REST_IP_PORT }}" >> .env
               echo "VM1_GRPC_IP_PORT=${{ secrets.VM1_GRPC_IP_PORT }}" >> .env
               docker-compose down
