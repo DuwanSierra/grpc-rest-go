@@ -86,6 +86,7 @@ jobs:
           source: ./docker-compose-files/VM1/docker-compose.yaml
           target: docker-compose-files
           overwrite: true
+          rm: true
 
       # Connect to VM1 and run docker commands
       - name: Deploy Docker image in VM1
