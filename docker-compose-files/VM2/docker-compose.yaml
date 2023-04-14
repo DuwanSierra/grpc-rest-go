@@ -16,6 +16,7 @@ services:
     image: duwansierra/microserviceb:latest
     ports:
       - 8081:8081
+      - 9091:9091
     links:
       - mongodb_container
     networks:
