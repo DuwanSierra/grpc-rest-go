@@ -8,7 +8,7 @@ services:
     expose:
       - 27017
     volumes:
-      - mongodb_data_container:/data/db
+      - ./mongo-data:/data/db
     restart: always
     networks:
       - microserviceb-network
@@ -24,13 +24,6 @@ services:
       - mongodb_container
     environment:
       SPRING_DATA_MONGODB_URI: mongodb://mongodb_container:27017/test_db
-volumes:
-  mongodb_data_container:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: /mongo-data
 networks:
   microserviceb-network:
     driver: bridge
