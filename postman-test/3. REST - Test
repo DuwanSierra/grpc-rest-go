@@ -1,0 +1,116 @@
+{
+	"info": {
+		"_postman_id": "63279f45-12f9-4071-98b6-48bc2c5b3c47",
+		"name": "Rest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Rest Api",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const currentTiming = pm.response.responseTime;\r",
+							"\r",
+							"let totalTiming = pm.collectionVariables.get(\"timing-rest\");\r",
+							"\r",
+							"let array;\r",
+							"\r",
+							"// If postman variable is empty it is an empty string\r",
+							"if (totalTiming.length === 0) {\r",
+							"   // This is the case for the first or single request\r",
+							"   totalTiming = currentTiming;\r",
+							"   array = [totalTiming];\r",
+							"} else {\r",
+							"   totalTiming = `${totalTiming},${currentTiming}`;\r",
+							"   array = totalTiming.split(',');\r",
+							"}\r",
+							"\r",
+							"pm.collectionVariables.set(\"timing-rest\", totalTiming);\r",
+							"\r",
+							"let sumOfArray = 0;\r",
+							"\r",
+							"for (let i = 0; i < array.length; i++) {\r",
+							"   sumOfArray += Number(array[i]);\r",
+							"}\r",
+							"\r",
+							"const average = sumOfArray / (array.length);\r",
+							"\r",
+							"pm.test(`Response timing-rest: Average = ${average.toFixed(2)}, Max = ${Math.max(...array)}, Min = ${Math.min(...array)}`, function () {\r",
+							"   pm.expect(pm.response.responseTime).to.be.above(0);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://66.135.12.9:8080/botanical-species?size={{size}}",
+					"protocol": "http",
+					"host": [
+						"66",
+						"135",
+						"12",
+						"9"
+					],
+					"port": "8080",
+					"path": [
+						"botanical-species"
+					],
+					"query": [
+						{
+							"key": "size",
+							"value": "{{size}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "timing-rest",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "size",
+			"value": "2999"
+		},
+		{
+			"key": "timing-grpc",
+			"value": "",
+			"type": "default"
+		}
+	]
+}
